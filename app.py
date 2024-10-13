@@ -72,5 +72,17 @@ def delete_document(collection, doc_id):
         return jsonify({"message": "Document deleted"}), 200
     return jsonify({"message": "Document not found"}), 404
 
+@app.route('/api/users', methods=['POST'])
+def add_user():
+    data = request.get_json()
+    # Assume you're generating or assigning a unique ID to the user
+    new_user = {
+        'id': generate_unique_id(),  # Example of ID generation
+        'name': data['name'],
+        'email': data['email']
+    }
+    users.append(new_user)
+    return jsonify(new_user), 201
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
