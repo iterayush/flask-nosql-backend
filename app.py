@@ -3,9 +3,8 @@ from flask_cors import CORS
 import uuid
 
 app = Flask(__name__)
-CORS(app)  # Allow cross-origin requests
+CORS(app)
 
-# Simulating a NoSQL database with an in-memory dictionary
 users_db = {}
 
 # Get all users
@@ -17,9 +16,9 @@ def get_users():
 @app.route('/api/users', methods=['POST'])
 def add_user():
     user_data = request.json
-    user_id = str(uuid.uuid4())  # Generate a unique ID for the user
+    user_id = str(uuid.uuid4()) 
     user_data['id'] = user_id
-    users_db[user_id] = user_data  # Store user data in the dictionary
+    users_db[user_id] = user_data  
     return jsonify({"message": "User added successfully!", "user": user_data}), 201
 
 # Update a user
@@ -27,7 +26,7 @@ def add_user():
 def update_user(user_id):
     if user_id in users_db:
         user_data = request.json
-        users_db[user_id].update(user_data)  # Update user data
+        users_db[user_id].update(user_data)  
         return jsonify({"message": "User updated successfully!"}), 200
     return jsonify({"message": "User not found!"}), 404
 
@@ -35,7 +34,7 @@ def update_user(user_id):
 @app.route('/api/users/<string:user_id>', methods=['DELETE'])
 def delete_user(user_id):
     if user_id in users_db:
-        del users_db[user_id]  # Remove user from the dictionary
+        del users_db[user_id] 
         return jsonify({"message": "User deleted successfully!"}), 200
     return jsonify({"message": "User not found!"}), 404
 
